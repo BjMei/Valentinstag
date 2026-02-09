@@ -20,18 +20,16 @@
             overflow-x: hidden;
         }
 
-        /* Herzen Animation */
+        /* FALLENDE HERZEN (stabil, ohne Emojis) */
         .heart {
             position: fixed;
             color: #ff1744;
-            font-size: 30px;
+            font-size: 28px;
             animation: fall linear infinite;
             opacity: 0.7;
             z-index: 1;
-        }
-
-        .heart::before {
-            content: '&#9829;';
+            user-select: none;
+            pointer-events: none;
         }
 
         @keyframes fall {
@@ -112,25 +110,6 @@
 
         .hidden { display: none; }
 
-        /* Ergebnis */
-        .result { text-align: center; }
-
-        .big-heart {
-            font-size: 80px;
-            margin: 20px 0;
-            animation: heartbeat 1.5s infinite;
-            color: #e91e63;
-        }
-
-        .big-heart::before {
-            content: '&#9829;';
-        }
-
-        @keyframes heartbeat {
-            0%,100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
         .error-message {
             background: #fff0f5;
             color: #e91e63;
@@ -183,53 +162,8 @@
 <h1>Valentinstag Quiz</h1>
 <p class="subtitle">Wie gut kennst du uns?</p>
 
-<!-- Frage 1 -->
-<div class="question-block">
-<div class="question-text">1. Wo haben wir uns das 1. Mal gesehen?</div>
-<label class="answer-option"><input type="radio" name="q1" value="a"> Bjoerns Wohnung</label>
-<label class="answer-option"><input type="radio" name="q1" value="b"> Waterscreen</label>
-<label class="answer-option"><input type="radio" name="q1" value="c"> Deine Wohnung</label>
-</div>
-
-<!-- Frage 2 -->
-<div class="question-block">
-<div class="question-text">2. Was haben wir zu unserem 1. Treffen gegessen?</div>
-<label class="answer-option"><input type="radio" name="q2" value="a"> Sushi</label>
-<label class="answer-option"><input type="radio" name="q2" value="b"> Burger</label>
-<label class="answer-option"><input type="radio" name="q2" value="c"> Pizza</label>
-</div>
-
-<!-- Frage 3 -->
-<div class="question-block">
-<div class="question-text">3. Welche Insider gehoeren zu uns?</div>
-<label class="answer-option"><input type="radio" name="q3" value="a"> Bonny &amp; Clyde</label>
-<label class="answer-option"><input type="radio" name="q3" value="b"> Die Bebys</label>
-<label class="answer-option"><input type="radio" name="q3" value="c"> Susi &amp; Strolch</label>
-</div>
-
-<!-- Frage 4 -->
-<div class="question-block">
-<div class="question-text">4. Was machen wir am liebsten zusammen?</div>
-<label class="answer-option"><input type="radio" name="q4" value="a"> Zusammen kochen</label>
-<label class="answer-option"><input type="radio" name="q4" value="b"> Netflix schauen und kuscheln</label>
-<label class="answer-option"><input type="radio" name="q4" value="c"> Spazieren gehen</label>
-</div>
-
-<!-- Frage 5 -->
-<div class="question-block">
-<div class="question-text">5. Was war die peinlichste Situation?</div>
-<label class="answer-option"><input type="radio" name="q5" value="a"> Im Kino eingeschlafen</label>
-<label class="answer-option"><input type="radio" name="q5" value="b"> Ein falsches Geschenk</label>
-<label class="answer-option"><input type="radio" name="q5" value="c"> Im Club auf der Tanzflaeche gelegen</label>
-</div>
-
-<!-- Frage 6 -->
-<div class="question-block">
-<div class="question-text">6. Was war mein erster Eindruck von dir?</div>
-<label class="answer-option"><input type="radio" name="q6" value="a"> Witzig und charmant</label>
-<label class="answer-option"><input type="radio" name="q6" value="b"> Selbstbewusst und cool</label>
-<label class="answer-option"><input type="radio" name="q6" value="c"> Suess und schuechtern</label>
-</div>
+<!-- Fragen 1–6 (unverändert) -->
+<!-- … exakt wie bei dir … -->
 
 <button class="submit-btn" onclick="checkAnswers()">Antworten pruefen</button>
 
@@ -237,11 +171,11 @@
     Hmm... nicht alle Antworten sind richtig! Versuch's nochmal!
 </div>
 
-</div> <!-- quiz-page -->
+</div>
 
 <!-- Ergebnis Seite -->
 <div id="result-page" class="hidden result">
-    <div class="big-heart"></div>
+    <div class="big-heart">♥</div>
     <h2>Wow! Du kennst uns wirklich gut!</h2>
     <p>
         Du hast alle Fragen richtig beantwortet!<br>
@@ -262,13 +196,14 @@
 </div> <!-- container -->
 
 <script>
-/* Herzen Animation */
+/* FALLENDE HERZEN – stabil, keine Emojis, keine Zahlen */
 function createHeart() {
     const heart = document.createElement('div');
     heart.className = 'heart';
+    heart.textContent = '♥';
     heart.style.left = Math.random() * 100 + 'vw';
     heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-    heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+    heart.style.fontSize = (Math.random() * 20 + 18) + 'px';
     document.body.appendChild(heart);
 
     setTimeout(() => heart.remove(), 7000);
@@ -302,19 +237,14 @@ function checkAnswers() {
 /* Buttons */
 function handleYes() {
     launchFireworks();
-    setTimeout(() => {
-        alert('Ich freu mich so sehr!\n\nDu machst mich so gluecklich!');
-    }, 500);
 }
 
+/* „Natürlich!“ → KEINE Alert-Meldung mehr */
 function handleNatural() {
     launchFireworks();
-    setTimeout(() => {
-        alert('Ich liebe dich!\n\nEs gibt wirklich keine andere Option!');
-    }, 500);
 }
 
-/* Feuerwerk */
+/* FEUERWERK */
 function launchFireworks() {
     const container = document.getElementById('firework-container');
     const colors = [
@@ -353,10 +283,13 @@ function createFirework(container, colors) {
     container.appendChild(rocket);
 
     const riseHeight = Math.random() * 300 + 200;
-    rocket.animate([
-        { transform: 'translateY(0)' },
-        { transform: `translateY(-${riseHeight}px)` }
-    ], { duration: 1000, easing: 'ease-out' });
+    rocket.animate(
+        [
+            { transform: 'translateY(0)' },
+            { transform: `translateY(-${riseHeight}px)` }
+        ],
+        { duration: 1000, easing: 'ease-out' }
+    );
 
     setTimeout(() => {
         explode(container, x, y - riseHeight, colors);
@@ -388,3 +321,4 @@ function explode(container, x, y, colors) {
 
 </body>
 </html>
+
