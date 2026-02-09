@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>❤️ Valentinstag Quiz ❤️</title>
+    <title>&#10084;&#65039; Valentinstag Quiz &#10084;&#65039;</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -20,29 +16,13 @@
             overflow-x: hidden;
         }
 
-        .heart {
-            position: fixed;
-            color: #ff1744;
-            font-size: 30px;
-            animation: fall linear infinite;
-            opacity: 0.7;
-            z-index: 1;
-        }
-
-        @keyframes fall {
-            0% { top: -10%; opacity: 0.7; }
-            100% { top: 110%; opacity: 0; }
-        }
-
         .container {
             max-width: 520px;
-            margin: 0 auto;
+            margin: auto;
             background: white;
             border-radius: 30px;
             padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 10;
+            box-shadow: 0 10px 40px rgba(0,0,0,.2);
         }
 
         h1 {
@@ -65,24 +45,13 @@
             border-left: 5px solid #ff4081;
         }
 
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
         .answer-option {
             display: block;
-            padding: 12px 15px;
+            padding: 12px;
             margin: 8px 0;
-            background: white;
             border: 2px solid #ffc0cb;
             border-radius: 10px;
             cursor: pointer;
-        }
-
-        .answer-option:hover {
-            background: #ffe4e9;
-            border-color: #ff4081;
         }
 
         .submit-btn {
@@ -95,24 +64,15 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
         }
 
-        .hidden { display: none; }
+        .hidden { display:none; }
 
-        .result {
-            text-align: center;
-        }
+        .result { text-align:center; }
 
         .big-heart {
             font-size: 80px;
             margin: 20px 0;
-            animation: heartbeat 1.5s infinite;
-        }
-
-        @keyframes heartbeat {
-            0%,100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
         }
 
         .date-buttons {
@@ -122,24 +82,16 @@
         }
 
         .date-btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
+            flex:1;
+            padding:15px;
+            border:none;
+            border-radius:15px;
+            font-weight:bold;
+            cursor:pointer;
         }
 
-        .btn-yes {
-            background: linear-gradient(135deg, #4caf50, #66bb6a);
-            color: white;
-        }
-
-        .btn-natural {
-            background: linear-gradient(135deg, #ff4081, #e91e63);
-            color: white;
-        }
+        .btn-yes { background:#4caf50; color:white; }
+        .btn-natural { background:#e91e63; color:white; }
 
         .error-message {
             margin-top: 20px;
@@ -147,7 +99,6 @@
             background: #fff0f5;
             color: #e91e63;
             border-radius: 10px;
-            border-left: 5px solid #ff4081;
         }
     </style>
 </head>
@@ -156,101 +107,69 @@
 
 <div class="container">
 
-    <div id="quiz-page">
-        <h1>❤️ Valentinstag Quiz ❤️</h1>
-        <p class="subtitle">Wie gut kennst du uns? 💕</p>
+<div id="quiz-page">
+    <h1>&#10084;&#65039; Valentinstag Quiz &#10084;&#65039;</h1>
+    <p class="subtitle">Wie gut kennst du uns? &#128149;</p>
 
-        <div class="question-block">
-            <div class="question-text">1. Wo haben wir uns das erste Mal gesehen?</div>
-            <label class="answer-option"><input type="radio" name="q1" value="a"> Björns Wohnung</label>
-            <label class="answer-option"><input type="radio" name="q1" value="b"> Waterscreen</label>
-            <label class="answer-option"><input type="radio" name="q1" value="c"> Deine Wohnung</label>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">2. Was haben wir bei unserem ersten Treffen gegessen?</div>
-            <label class="answer-option"><input type="radio" name="q2" value="a"> Sushi</label>
-            <label class="answer-option"><input type="radio" name="q2" value="b"> Burger</label>
-            <label class="answer-option"><input type="radio" name="q2" value="c"> Pizza</label>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">3. Welche Insider gehören zu uns?</div>
-            <label class="answer-option"><input type="radio" name="q3" value="a"> Bonnie & Clyde</label>
-            <label class="answer-option"><input type="radio" name="q3" value="b"> Die Bebys</label>
-            <label class="answer-option"><input type="radio" name="q3" value="c"> Susi & Strolch</label>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">4. Was machen wir am liebsten zusammen?</div>
-            <label class="answer-option"><input type="radio" name="q4" value="a"> Zusammen kochen</label>
-            <label class="answer-option"><input type="radio" name="q4" value="b"> Netflix & Kuscheln</label>
-            <label class="answer-option"><input type="radio" name="q4" value="c"> Spazieren gehen</label>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">5. Was war die peinlichste Situation?</div>
-            <label class="answer-option"><input type="radio" name="q5" value="a"> Im Kino eingeschlafen</label>
-            <label class="answer-option"><input type="radio" name="q5" value="b"> Falsches Geschenk</label>
-            <label class="answer-option"><input type="radio" name="q5" value="c"> Im Club auf der Tanzfläche gelegen</label>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">6. Mein erster Eindruck von dir?</div>
-            <label class="answer-option"><input type="radio" name="q6" value="a"> Witzig & charmant</label>
-            <label class="answer-option"><input type="radio" name="q6" value="b"> Selbstbewusst & cool</label>
-            <label class="answer-option"><input type="radio" name="q6" value="c"> Süß & schüchtern</label>
-        </div>
-
-        <button class="submit-btn" onclick="checkAnswers()">Antworten prüfen ❤️</button>
-
-        <div id="error" class="hidden error-message">
-            Nicht ganz 😉 Versuch es nochmal 💕
-        </div>
+    <div class="question-block">
+        <b>1. Wo haben wir uns das erste Mal gesehen?</b><br>
+        <label class="answer-option"><input type="radio" name="q1" value="a"> Bj&ouml;rns Wohnung</label>
+        <label class="answer-option"><input type="radio" name="q1" value="b"> Waterscreen</label>
+        <label class="answer-option"><input type="radio" name="q1" value="c"> Deine Wohnung</label>
     </div>
 
-    <div id="result-page" class="hidden result">
-        <div class="big-heart">❤️</div>
-        <h2>Wow! Du kennst uns wirklich gut!</h2>
-        <p>
-            Du hast alle Fragen richtig beantwortet ✨<br>
-            Das zeigt, wie aufmerksam und besonders du bist.<br>
-            Du hast dich offiziell für unseren Valentinstag qualifiziert 💕
-        </p>
-
-        <h2>Willst du mein Valentinstags-Date sein? 💝</h2>
-
-        <div class="date-buttons">
-            <button class="date-btn btn-yes" onclick="alert('Ich freu mich riesig ❤️')">Ja ❤️</button>
-            <button class="date-btn btn-natural" onclick="alert('Es gibt keine andere Antwort 😄💕')">Natürlich 💕</button>
-        </div>
+    <div class="question-block">
+        <b>2. Was haben wir beim ersten Treffen gegessen?</b><br>
+        <label class="answer-option"><input type="radio" name="q2" value="a"> Sushi</label>
+        <label class="answer-option"><input type="radio" name="q2" value="b"> Burger</label>
+        <label class="answer-option"><input type="radio" name="q2" value="c"> Pizza</label>
     </div>
+
+    <div class="question-block">
+        <b>3. Welche Insider geh&ouml;ren zu uns?</b><br>
+        <label class="answer-option"><input type="radio" name="q3" value="a"> Bonnie &amp; Clyde</label>
+        <label class="answer-option"><input type="radio" name="q3" value="b"> Die Bebys</label>
+        <label class="answer-option"><input type="radio" name="q3" value="c"> Susi &amp; Strolch</label>
+    </div>
+
+    <button class="submit-btn" onclick="check()">Antworten pr&uuml;fen &#10084;&#65039;</button>
+
+    <div id="error" class="hidden error-message">
+        Nicht ganz 😉 Versuch es nochmal &#128149;
+    </div>
+</div>
+
+<div id="result" class="hidden result">
+    <div class="big-heart">&#10084;&#65039;</div>
+    <h2>Wow! Du kennst uns wirklich gut!</h2>
+    <p>
+        Du hast alles richtig beantwortet &#10024;<br>
+        Du hast dich offiziell f&uuml;r unseren Valentinstag qualifiziert &#128149;
+    </p>
+
+    <h2>Willst du mein Valentinstags-Date sein? &#128157;</h2>
+
+    <div class="date-buttons">
+        <button class="date-btn btn-yes" onclick="alert('Ich freu mich riesig!')">Ja &#10084;&#65039;</button>
+        <button class="date-btn btn-natural" onclick="alert('Es gibt keine andere Antwort!')">Nat&uuml;rlich &#128149;</button>
+    </div>
+</div>
 
 </div>
 
 <script>
-    setInterval(() => {
-        const h = document.createElement('div');
-        h.className = 'heart';
-        h.innerText = '❤️';
-        h.style.left = Math.random() * 100 + 'vw';
-        h.style.animationDuration = (Math.random() * 3 + 4) + 's';
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 7000);
-    }, 300);
-
-    function checkAnswers() {
-        const correct = { q1:'b', q2:'c', q3:'b', q4:'b', q5:'c', q6:'c' };
-        for (let i=1;i<=6;i++) {
-            const a = document.querySelector(`input[name="q${i}"]:checked`);
-            if (!a || a.value !== correct[`q${i}`]) {
-                document.getElementById('error').classList.remove('hidden');
-                return;
-            }
+function check(){
+    const correct={q1:'b',q2:'c',q3:'b'};
+    for(let i=1;i<=3;i++){
+        const a=document.querySelector(`input[name="q${i}"]:checked`);
+        if(!a||a.value!==correct[`q${i}`]){
+            document.getElementById('error').classList.remove('hidden');
+            return;
         }
-        document.getElementById('quiz-page').classList.add('hidden');
-        document.getElementById('result-page').classList.remove('hidden');
     }
+    document.getElementById('quiz-page').classList.add('hidden');
+    document.getElementById('result').classList.remove('hidden');
+}
 </script>
 
 </body>
