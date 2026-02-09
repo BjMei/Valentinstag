@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>&#10084;&#65039; Valentinstag Quiz &#10084;&#65039;</title>
+    <title>Valentinstag Quiz</title>
 
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,25 +20,48 @@
             overflow-x: hidden;
         }
 
+        /* Herzen Animation */
+        .heart {
+            position: fixed;
+            color: #ff1744;
+            font-size: 30px;
+            animation: fall linear infinite;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .heart::before {
+            content: '&#9829;';
+        }
+
+        @keyframes fall {
+            0% { top: -10%; opacity: 0.7; }
+            100% { top: 110%; opacity: 0; }
+        }
+
         .container {
-            max-width: 520px;
-            margin: auto;
+            max-width: 500px;
+            margin: 0 auto;
             background: white;
             border-radius: 30px;
             padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
             color: #e91e63;
             text-align: center;
             margin-bottom: 10px;
+            font-size: 28px;
         }
 
         .subtitle {
             text-align: center;
             color: #666;
             margin-bottom: 30px;
+            font-size: 16px;
         }
 
         .question-block {
@@ -45,130 +72,317 @@
             border-left: 5px solid #ff4081;
         }
 
+        .question-text {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
         .answer-option {
             display: block;
-            padding: 12px;
+            padding: 12px 15px;
             margin: 8px 0;
+            background: white;
             border: 2px solid #ffc0cb;
             border-radius: 10px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+        .answer-option:hover {
+            background: #ffe4e9;
+            border-color: #ff4081;
+            transform: translateX(5px);
         }
 
         .submit-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #ff4081, #e91e63);
+            background: linear-gradient(135deg, #ff4081 0%, #e91e63 100%);
             color: white;
             border: none;
             border-radius: 15px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 20px;
         }
 
-        .hidden { display:none; }
+        .hidden { display: none; }
 
-        .result { text-align:center; }
+        /* Ergebnis */
+        .result { text-align: center; }
 
         .big-heart {
             font-size: 80px;
             margin: 20px 0;
+            animation: heartbeat 1.5s infinite;
+            color: #e91e63;
         }
 
-        .date-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
+        .big-heart::before {
+            content: '&#9829;';
         }
 
-        .date-btn {
-            flex:1;
-            padding:15px;
-            border:none;
-            border-radius:15px;
-            font-weight:bold;
-            cursor:pointer;
+        @keyframes heartbeat {
+            0%,100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
-
-        .btn-yes { background:#4caf50; color:white; }
-        .btn-natural { background:#e91e63; color:white; }
 
         .error-message {
-            margin-top: 20px;
-            padding: 15px;
             background: #fff0f5;
             color: #e91e63;
+            padding: 15px;
             border-radius: 10px;
+            margin-top: 20px;
+            border-left: 5px solid #ff4081;
+        }
+
+        /* Feuerwerk */
+        .firework-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .firework {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: firework-explode 1s ease-out forwards;
+        }
+
+        @keyframes firework-explode {
+            from { transform: translate(0,0); opacity:1; }
+            to { transform: translate(var(--x), var(--y)); opacity:0; }
         }
     </style>
 </head>
 
 <body>
 
+<div class="firework-container" id="firework-container"></div>
+
 <div class="container">
-
 <div id="quiz-page">
-    <h1>&#10084;&#65039; Valentinstag Quiz &#10084;&#65039;</h1>
-    <p class="subtitle">Wie gut kennst du uns? &#128149;</p>
 
-    <div class="question-block">
-        <b>1. Wo haben wir uns das erste Mal gesehen?</b><br>
-        <label class="answer-option"><input type="radio" name="q1" value="a"> Bj&ouml;rns Wohnung</label>
-        <label class="answer-option"><input type="radio" name="q1" value="b"> Waterscreen</label>
-        <label class="answer-option"><input type="radio" name="q1" value="c"> Deine Wohnung</label>
-    </div>
+<h1>Valentinstag Quiz</h1>
+<p class="subtitle">Wie gut kennst du uns?</p>
 
-    <div class="question-block">
-        <b>2. Was haben wir beim ersten Treffen gegessen?</b><br>
-        <label class="answer-option"><input type="radio" name="q2" value="a"> Sushi</label>
-        <label class="answer-option"><input type="radio" name="q2" value="b"> Burger</label>
-        <label class="answer-option"><input type="radio" name="q2" value="c"> Pizza</label>
-    </div>
-
-    <div class="question-block">
-        <b>3. Welche Insider geh&ouml;ren zu uns?</b><br>
-        <label class="answer-option"><input type="radio" name="q3" value="a"> Bonnie &amp; Clyde</label>
-        <label class="answer-option"><input type="radio" name="q3" value="b"> Die Bebys</label>
-        <label class="answer-option"><input type="radio" name="q3" value="c"> Susi &amp; Strolch</label>
-    </div>
-
-    <button class="submit-btn" onclick="check()">Antworten pr&uuml;fen &#10084;&#65039;</button>
-
-    <div id="error" class="hidden error-message">
-        Nicht ganz 😉 Versuch es nochmal &#128149;
-    </div>
+<!-- Frage 1 -->
+<div class="question-block">
+<div class="question-text">1. Wo haben wir uns das 1. Mal gesehen?</div>
+<label class="answer-option"><input type="radio" name="q1" value="a"> Bjoerns Wohnung</label>
+<label class="answer-option"><input type="radio" name="q1" value="b"> Waterscreen</label>
+<label class="answer-option"><input type="radio" name="q1" value="c"> Deine Wohnung</label>
 </div>
 
-<div id="result" class="hidden result">
-    <div class="big-heart">&#10084;&#65039;</div>
+<!-- Frage 2 -->
+<div class="question-block">
+<div class="question-text">2. Was haben wir zu unserem 1. Treffen gegessen?</div>
+<label class="answer-option"><input type="radio" name="q2" value="a"> Sushi</label>
+<label class="answer-option"><input type="radio" name="q2" value="b"> Burger</label>
+<label class="answer-option"><input type="radio" name="q2" value="c"> Pizza</label>
+</div>
+
+<!-- Frage 3 -->
+<div class="question-block">
+<div class="question-text">3. Welche Insider gehoeren zu uns?</div>
+<label class="answer-option"><input type="radio" name="q3" value="a"> Bonny &amp; Clyde</label>
+<label class="answer-option"><input type="radio" name="q3" value="b"> Die Bebys</label>
+<label class="answer-option"><input type="radio" name="q3" value="c"> Susi &amp; Strolch</label>
+</div>
+
+<!-- Frage 4 -->
+<div class="question-block">
+<div class="question-text">4. Was machen wir am liebsten zusammen?</div>
+<label class="answer-option"><input type="radio" name="q4" value="a"> Zusammen kochen</label>
+<label class="answer-option"><input type="radio" name="q4" value="b"> Netflix schauen und kuscheln</label>
+<label class="answer-option"><input type="radio" name="q4" value="c"> Spazieren gehen</label>
+</div>
+
+<!-- Frage 5 -->
+<div class="question-block">
+<div class="question-text">5. Was war die peinlichste Situation?</div>
+<label class="answer-option"><input type="radio" name="q5" value="a"> Im Kino eingeschlafen</label>
+<label class="answer-option"><input type="radio" name="q5" value="b"> Ein falsches Geschenk</label>
+<label class="answer-option"><input type="radio" name="q5" value="c"> Im Club auf der Tanzflaeche gelegen</label>
+</div>
+
+<!-- Frage 6 -->
+<div class="question-block">
+<div class="question-text">6. Was war mein erster Eindruck von dir?</div>
+<label class="answer-option"><input type="radio" name="q6" value="a"> Witzig und charmant</label>
+<label class="answer-option"><input type="radio" name="q6" value="b"> Selbstbewusst und cool</label>
+<label class="answer-option"><input type="radio" name="q6" value="c"> Suess und schuechtern</label>
+</div>
+
+<button class="submit-btn" onclick="checkAnswers()">Antworten pruefen</button>
+
+<div id="error" class="hidden error-message">
+    Hmm... nicht alle Antworten sind richtig! Versuch's nochmal!
+</div>
+
+</div> <!-- quiz-page -->
+
+<!-- Ergebnis Seite -->
+<div id="result-page" class="hidden result">
+    <div class="big-heart"></div>
     <h2>Wow! Du kennst uns wirklich gut!</h2>
     <p>
-        Du hast alles richtig beantwortet &#10024;<br>
-        Du hast dich offiziell f&uuml;r unseren Valentinstag qualifiziert &#128149;
+        Du hast alle Fragen richtig beantwortet!<br>
+        Das zeigt, wie aufmerksam du bist - und wie besonders das ist.<br>
+        Kein Zweifel: Du hast dich offiziell fuer unseren Valentinstag qualifiziert!
     </p>
 
-    <h2>Willst du mein Valentinstags-Date sein? &#128157;</h2>
+    <div class="date-question">
+        Willst du mein Valentinstags-Date sein?
+    </div>
 
     <div class="date-buttons">
-        <button class="date-btn btn-yes" onclick="alert('Ich freu mich riesig!')">Ja &#10084;&#65039;</button>
-        <button class="date-btn btn-natural" onclick="alert('Es gibt keine andere Antwort!')">Nat&uuml;rlich &#128149;</button>
+        <button class="date-btn btn-yes" onclick="handleYes()">Ja</button>
+        <button class="date-btn btn-natural" onclick="handleNatural()">Natuerlich!</button>
     </div>
 </div>
 
-</div>
+</div> <!-- container -->
 
 <script>
-function check(){
-    const correct={q1:'b',q2:'c',q3:'b'};
-    for(let i=1;i<=3;i++){
-        const a=document.querySelector(`input[name="q${i}"]:checked`);
-        if(!a||a.value!==correct[`q${i}`]){
+/* Herzen Animation */
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+    heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 7000);
+}
+setInterval(createHeart, 300);
+
+/* Quiz Logik */
+function checkAnswers() {
+    const correctAnswers = {
+        q1: 'b',
+        q2: 'c',
+        q3: 'b',
+        q4: 'b',
+        q5: 'c',
+        q6: 'c'
+    };
+
+    for (let i = 1; i <= 6; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!selected || selected.value !== correctAnswers[`q${i}`]) {
             document.getElementById('error').classList.remove('hidden');
             return;
         }
     }
+
     document.getElementById('quiz-page').classList.add('hidden');
-    document.getElementById('result').classList.remove('hidden');
+    document.getElementById('result-page').classList.remove('hidden');
+    document.getElementById('error').classList.add('hidden');
+}
+
+/* Buttons */
+function handleYes() {
+    launchFireworks();
+    setTimeout(() => {
+        alert('Ich freu mich so sehr!\n\nDu machst mich so gluecklich!');
+    }, 500);
+}
+
+function handleNatural() {
+    launchFireworks();
+    setTimeout(() => {
+        alert('Ich liebe dich!\n\nEs gibt wirklich keine andere Option!');
+    }, 500);
+}
+
+/* Feuerwerk */
+function launchFireworks() {
+    const container = document.getElementById('firework-container');
+    const colors = [
+        '#ff1744','#ff4081','#e91e63','#f50057',
+        '#ff6090','#ff80ab','#ffd700','#ffb74d',
+        '#ff9800','#ff5722','#00ff00','#00ffff',
+        '#0080ff','#8000ff','#ff00ff'
+    ];
+
+    for (let i = 0; i < 80; i++) {
+        setTimeout(() => createFirework(container, colors), i * 100);
+    }
+
+    setTimeout(() => {
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => createFirework(container, colors), i * 80);
+        }
+    }, 2000);
+
+    setTimeout(() => {
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => createFirework(container, colors), i * 60);
+        }
+    }, 4000);
+}
+
+function createFirework(container, colors) {
+    const x = Math.random() * window.innerWidth;
+    const y = window.innerHeight;
+
+    const rocket = document.createElement('div');
+    rocket.className = 'firework';
+    rocket.style.left = x + 'px';
+    rocket.style.top = y + 'px';
+    rocket.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    container.appendChild(rocket);
+
+    const riseHeight = Math.random() * 300 + 200;
+    rocket.animate([
+        { transform: 'translateY(0)' },
+        { transform: `translateY(-${riseHeight}px)` }
+    ], { duration: 1000, easing: 'ease-out' });
+
+    setTimeout(() => {
+        explode(container, x, y - riseHeight, colors);
+        rocket.remove();
+    }, 1000);
+}
+
+function explode(container, x, y, colors) {
+    const particleCount = 100;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+
+    for (let i = 0; i < particleCount; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = x + 'px';
+        p.style.top = y + 'px';
+        p.style.backgroundColor = color;
+
+        const angle = (Math.PI * 2 * i) / particleCount;
+        const velocity = Math.random() * 200 + 120;
+        p.style.setProperty('--x', Math.cos(angle) * velocity + 'px');
+        p.style.setProperty('--y', Math.sin(angle) * velocity + 'px');
+
+        container.appendChild(p);
+        setTimeout(() => p.remove(), 1200);
+    }
 }
 </script>
 
