@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 40px auto;
+            text-align: center;
+        }
+        .hidden { display: none; }
+        button { padding: 10px 20px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h2>Wie gut kennst du uns?</h2>
+
+    <div id="quiz">
+        <p>1. Wo hatten wir unser erstes Date?</p>
+        <input id="q1" type="text">
+
+        <p>2. Was ist mein Lieblingsgetränk?</p>
+        <input id="q2" type="text">
+
+        <p>3. Welcher Insider gehört zu uns?</p>
+        <input id="q3" type="text">
+
+        <p>4. Was machen wir am liebsten zusammen?</p>
+        <input id="q4" type="text">
+
+        <button onclick="checkAnswers()">Antworten prüfen</button>
+    </div>
+
+    <div id="result" class="hidden">
+        <h3>Okay… du kennst uns wirklich.</h3>
+        <h2>Willst du mein Valentinstags-Date sein?</h2>
+        <button onclick="alert('Ich freu mich ❤️')">Ja</button>
+        <button onclick="alert('Gibt keine andere Option 😄')">Natürlich</button>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            let a1 = document.getElementById("q1").value.trim().toLowerCase();
+            let a2 = document.getElementById("q2").value.trim().toLowerCase();
+            let a3 = document.getElementById("q3").value.trim().toLowerCase();
+            let a4 = document.getElementById("q4").value.trim().toLowerCase();
+
+            // HIER DEINE KORREKTEN ANTWORTEN EINTRAGEN
+            if (
+                a1 === "deine antwort 1" &&
+                a2 === "deine antwort 2" &&
+                a3 === "deine antwort 3" &&
+                a4 === "deine antwort 4"
+            ) {
+                document.getElementById("quiz").classList.add("hidden");
+                document.getElementById("result").classList.remove("hidden");
+            } else {
+                alert("Eine oder mehrere Antworten sind falsch 😄");
+            }
+        }
+    </script>
+
+</body>
+</html>
