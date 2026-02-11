@@ -450,34 +450,29 @@
         }
 
         // Spektakuläres Feuerwerk
-        function launchFireworks() {
-            const container = document.getElementById('firework-container');
-            const colors = ['#ff1744', '#ff4081', '#e91e63', '#f50057', '#ff6090', '#ff80ab', '#ffd700', '#ffb74d', '#ff9800', '#ff5722', '#00ff00', '#00ffff', '#0080ff', '#8000ff', '#ff00ff'];
-            
-            // 80 Feuerwerke für mega Spektakel!
-            for (let i = 0; i < 80; i++) {
-                setTimeout(() => {
-                    createFirework(container, colors);
-                }, i * 100);
-            }
-            
-            // Zusätzliche Wellen von Feuerwerken
+       function launchFireworks() {
+    const container = document.getElementById('firework-container');
+    const colors = [
+        '#ff1744', '#ff4081', '#e91e63',
+        '#ffd700', '#ff9800', '#00ffff'
+    ];
+
+    // 20 Feuerwerke (statt 80)
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            createFirework(container, colors);
+        }, i * 120);
+    }
+
+    // kleine zweite Welle
+    setTimeout(() => {
+        for (let i = 0; i < 15; i++) {
             setTimeout(() => {
-                for (let i = 0; i < 50; i++) {
-                    setTimeout(() => {
-                        createFirework(container, colors);
-                    }, i * 80);
-                }
-            }, 2000);
-            
-            setTimeout(() => {
-                for (let i = 0; i < 50; i++) {
-                    setTimeout(() => {
-                        createFirework(container, colors);
-                    }, i * 60);
-                }
-            }, 4000);
+                createFirework(container, colors);
+            }, i * 150);
         }
+    }, 1500);
+}
 
         function createFirework(container, colors) {
             const x = Math.random() * window.innerWidth;
@@ -508,78 +503,47 @@
             }, 1000);
         }
 
-        function explode(container, x, y, colors) {
-            const particleCount = 100; // NOCH MEHR Partikel!
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
-                particle.style.backgroundColor = color;
-                
-                // Zufällige Explosionsrichtung
-                const angle = (Math.PI * 2 * i) / particleCount;
-                const velocity = Math.random() * 200 + 120;
-                const xVel = Math.cos(angle) * velocity;
-                const yVel = Math.sin(angle) * velocity;
-                
-                particle.style.setProperty('--x', xVel + 'px');
-                particle.style.setProperty('--y', yVel + 'px');
-                
-                container.appendChild(particle);
-                
-                // Partikel nach Animation entfernen
-                setTimeout(() => {
-                    particle.remove();
-                }, 1200);
-            }
-            
-            // Mega Glitzer-Effekt
-            for (let i = 0; i < 60; i++) {
-                setTimeout(() => {
-                    const glitter = document.createElement('div');
-                    glitter.className = 'particle';
-                    glitter.style.left = (x + (Math.random() - 0.5) * 150) + 'px';
-                    glitter.style.top = (y + (Math.random() - 0.5) * 150) + 'px';
-                    glitter.style.backgroundColor = '#ffd700';
-                    glitter.style.width = '8px';
-                    glitter.style.height = '8px';
-                    glitter.style.setProperty('--x', (Math.random() - 0.5) * 80 + 'px');
-                    glitter.style.setProperty('--y', (Math.random() - 0.5) * 80 + 'px');
-                    container.appendChild(glitter);
-                    setTimeout(() => glitter.remove(), 1200);
-                }, i * 20);
-            }
-            
-            // Doppel-Explosion für extra Effekt!
-            setTimeout(() => {
-                const secondaryCount = 50;
-                const secondaryColor = colors[Math.floor(Math.random() * colors.length)];
 
-                for (let i = 0; i < secondaryCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = x + 'px';
-                    particle.style.top = y + 'px';
-                    particle.style.backgroundColor = secondaryColor;
-                    particle.style.width = '8px';
-                    particle.style.height = '8px';
 
-                    const angle = (Math.PI * 2 * i) / secondaryCount;
-                    const velocity = Math.random() * 100 + 60;
-                    const xVel = Math.cos(angle) * velocity;
-                    const yVel = Math.sin(angle) * velocity;
+    // Glitzer (reduziert)
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const glitter = document.createElement('div');
+            glitter.className = 'particle';
+            glitter.style.left = x + 'px';
+            glitter.style.top = y + 'px';
+            glitter.style.backgroundColor = '#ffd700';
+            glitter.style.width = '6px';
+            glitter.style.height = '6px';
+            glitter.style.setProperty('--x', (Math.random() - 0.5) * 60 + 'px');
+            glitter.style.setProperty('--y', (Math.random() - 0.5) * 60 + 'px');
+            container.appendChild(glitter);
+            setTimeout(() => glitter.remove(), 900);
+        }, i * 25);
+    }
 
-                    particle.style.setProperty('--x', xVel + 'px');
-                    particle.style.setProperty('--y', yVel + 'px');
+    // kleinere Zweit-Explosion
+    setTimeout(() => {
+        const secondaryCount = 20;
+        const secondaryColor = colors[Math.floor(Math.random() * colors.length)];
 
-                    container.appendChild(particle);
-                    setTimeout(() => particle.remove(), 1000);
-                }
-            }, 300);
+        for (let i = 0; i < secondaryCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.backgroundColor = secondaryColor;
+
+            const angle = (Math.PI * 2 * i) / secondaryCount;
+            const velocity = Math.random() * 100 + 50;
+            particle.style.setProperty('--x', Math.cos(angle) * velocity + 'px');
+            particle.style.setProperty('--y', Math.sin(angle) * velocity + 'px');
+
+            container.appendChild(particle);
+            setTimeout(() => particle.remove(), 900);
         }
+    }, 250);
+}
 
         function handleYes() {
             launchFireworks();
@@ -592,4 +556,5 @@
 
 </body>
 </html>
+
 
