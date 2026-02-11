@@ -557,6 +557,7 @@
             setTimeout(() => {
                 const secondaryCount = 50;
                 const secondaryColor = colors[Math.floor(Math.random() * colors.length)];
+
                 for (let i = 0; i < secondaryCount; i++) {
                     const particle = document.createElement('div');
                     particle.className = 'particle';
@@ -565,19 +566,27 @@
                     particle.style.backgroundColor = secondaryColor;
                     particle.style.width = '8px';
                     particle.style.height = '8px';
-                    
+
                     const angle = (Math.PI * 2 * i) / secondaryCount;
                     const velocity = Math.random() * 100 + 60;
                     const xVel = Math.cos(angle) * velocity;
                     const yVel = Math.sin(angle) * velocity;
-                    
+
                     particle.style.setProperty('--x', xVel + 'px');
                     particle.style.setProperty('--y', yVel + 'px');
-                    
+
                     container.appendChild(particle);
                     setTimeout(() => particle.remove(), 1000);
                 }
             }, 300);
+        }
+
+        function handleYes() {
+            launchFireworks();
+        }
+
+        function handleNatural() {
+            launchFireworks();
         }
     </script>
 
